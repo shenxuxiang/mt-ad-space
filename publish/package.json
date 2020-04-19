@@ -1,0 +1,26 @@
+{
+  "name": "mt-ad-space",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "files": [
+    "ad-space",
+    "LICENSE",
+    "index.js",
+    "package.json",
+    "README.md" 
+  ],
+  "description": "react ad space, is a react component that ad space, build for mobile web app",
+  "keywords": [
+    "react",
+    "mobile",
+    "ad space",
+    "slide",
+    "swipper",
+    "react-carousel"
+  ],
+  "bugs": {
+    "url": "https://github.com/shenxuxiang/mt-ad-space/issues"
+  },
+  "author": "https://github.com/shenxuxiang/mt-ad-space"
+}
