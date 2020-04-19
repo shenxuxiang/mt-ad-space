@@ -12,7 +12,6 @@ export const Quad = (t, b, c, d) => {
     return (-c * (t /= d) * (t - 2) + b);
   };
   
-  
   /**
    * requestAnimationFrame 兼容处理
    */
@@ -46,16 +45,3 @@ export const Quad = (t, b, c, d) => {
   
   export const requestAnimationFrame = window.requestAnimationFrame;
   export const cancelAnimationFrame = window.cancelAnimationFrame;
-  
-  // 屏幕宽度
-  export const SW = window.innerWidth ||
-    document.documentElement.clientWidth ||
-    document.body.clientWidth;
-  
-  // 单例模式
-  export function getSignal(fn) {
-    let result = false;
-    return function () {
-      return result || (result = fn.apply(this, arguments));
-    }
-  }

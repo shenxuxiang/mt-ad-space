@@ -1,12 +1,11 @@
-import React, { PureComponent, createRef } from "react";
-import PropTypes from "prop-types";
-import "./index.less";
+import React, { PureComponent, createRef } from 'react';
+import PropTypes from 'prop-types';
+import { Quad, requestAnimationFrame, cancelAnimationFrame } from './utils';
+import './index.less';
 
 // 动画的速度
 const SPEED = 10;
-// 动画曲线
-// eslint-disable-next-line
-const Quad = (t, b, c, d) => -c * (t /= d) * (t - 2) + b;
+
 const LIMITDIST = 50;
 
 export default class AdSpace extends PureComponent {
@@ -23,10 +22,10 @@ export default class AdSpace extends PureComponent {
   }
 
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       index: 0,
-    }
+    };
     this.wrapperRef = createRef(null);
     this.boxRef = createRef(null);
     // 每个 AdSpace 的实际宽度（width + marginRight）
@@ -34,7 +33,7 @@ export default class AdSpace extends PureComponent {
     // 保存当前 wrapperRef 的 translateX 的值
     this.offsetX = 0;
   }
-  
+
   componentDidMount() {
     const { children, width, spacing } = this.props;
     // if (children.length <= 1) return;
@@ -42,7 +41,9 @@ export default class AdSpace extends PureComponent {
     // 可视区可完全容纳几个 AdSpace
     const num = Math.floor(boxWidth / width);
     // 第二个 AdSpace 滑动到最左边的位置时，wrapperRef 的 translateX 的值
-    this.minOffsetLeft = spacing + this.width - ((boxWidth - (width * num + (num - 1) * spacing)) / 2);
+    this.minOffsetLeft = spacing + this.width - (
+      (boxWidth - (width * num + (num - 1) * spacing)) / 2
+    );
     // 最后一个 AdSpace 完全展示在可视区最右边时，wrapperRef 的 translateX 的值
     this.maxOffsetLeft = this.wrapperRef.current.scrollWidth - boxWidth;
     // 一共多少个子元素，还要再减去 完全展示的子元素的个数
@@ -89,16 +90,16 @@ export default class AdSpace extends PureComponent {
   handleTouchEnd = () => {
     const { index } = this.state;
     let indicator = index;
-    
+
     if (this.slideStatus === 'vertical') {
       this.animation(indicator);
       return;
     }
-    
+
     this.offsetX += this.slideX;
     // 当前是第一张图片且是向右滑动 或者 当前是最后张图片且是向左滑动
     if (
-      (index === 0 && this.slideX > 0) || 
+      (index === 0 && this.slideX > 0) ||
       (index === this.len && this.slideX < 0)
     ) {
       this.animation(indicator);
@@ -115,7 +116,7 @@ export default class AdSpace extends PureComponent {
   }
 
   // 动画过度效果
-  animation = indicator => {
+  animation = (indicator) => {
     const { index } = this.state;
     // 动画执行的次数
     let start = 0;
@@ -150,7 +151,7 @@ export default class AdSpace extends PureComponent {
         this.requestAnimationID = null;
         this.offsetX = this.dist;
       }
-    }
+    };
     if (indicator === index) {
       run();
     } else {
@@ -161,17 +162,17 @@ export default class AdSpace extends PureComponent {
     }
   }
 
-  translateX = x => {
-    this.wrapperRef.current.style.transform = `translateX(${x}px)`
-    this.wrapperRef.current.style.webkitTransform = `translateX(${x}px)`
+  translateX = (x) => {
+    this.wrapperRef.current.style.transform = `translateX(${x}px)`;
+    this.wrapperRef.current.style.webkitTransform = `translateX(${x}px)`;
   }
 
   render() {
-    const { children, spacing, width } = this.props
+    const { children, spacing, width } = this.props;
     return (
       <div className="mt-ad-space" ref={this.boxRef}>
         <div
-          className={`mt-ad-space-wrapper`}
+          className="mt-ad-space-wrapper"
           style={{
             paddingLeft: `${children.length > 1 ? spacing : 0}px`,
             width: `${children.length > 1 ? `${children.length * (width + spacing)}px` : '100%'}`,
@@ -179,7 +180,7 @@ export default class AdSpace extends PureComponent {
           ref={this.wrapperRef}
         >
           {
-            React.Children.map(children, child =>
+            React.Children.map(children, (child) =>
               React.cloneElement(child, {
                 style: {
                   margin: `${children.length > 1 ? `0 ${spacing}px 0 0` : 'auto'}`,
@@ -191,6 +192,6 @@ export default class AdSpace extends PureComponent {
           }
         </div>
       </div>
-    )
+    );
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "mt-ad-space",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "index.js",
   "license": "MIT",
   "homepage": "https://github.com/shenxuxiang/mt-ad-space",
@@ -10,7 +10,7 @@
     "prod": "webpack --config config/webpack.config.prod.js",
     "deploy": "gh-pages -d build",
     "mock": "node mock/index.js",
-    "lint": "eslint --ext .js src/preview-image",
+    "lint": "eslint --ext .js src/ad-space",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "https://github.com/shenxuxiang/mt-ad-space",
