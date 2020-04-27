@@ -15,12 +15,15 @@ export default class App extends PureComponent {
   constructor() {
     super();
     this.state = {
+      sourceList1: [],
+      sourceList2: [],
       indicator: 0,
       key: 0,
     };
   }
 
   componentDidMount() {
+    this.setState({ sourceList1: source, sourceList2: source_2  });
     window.addEventListener('resize', this.handleResize, false);
   }
   componentWillUnmount() {
@@ -44,7 +47,7 @@ export default class App extends PureComponent {
           }}
         >
           {
-            source.map((item, key) =>
+            this.state.sourceList1.map((item, key) =>
               <div key={key} className="item">
                 <img src={item} />
               </div>
@@ -58,7 +61,7 @@ export default class App extends PureComponent {
           spacing={10}
         >
           {
-            source_2.map((item, key) =>
+            this.state.sourceList2.map((item, key) =>
               <ul key={key} className="ad-space">
                 {
                   item.map(it =>

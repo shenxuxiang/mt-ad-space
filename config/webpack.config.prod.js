@@ -105,7 +105,7 @@ module.exports = {
             include: path.resolve('src'),
             options: {
               presets: [
-                ['@babel/preset-env', { modules: false, debug: true, useBuiltIns: 'usage', corejs: 3 }],
+                ['@babel/preset-env', { modules: false, debug: false, useBuiltIns: 'usage', corejs: 3 }],
                 '@babel/preset-react',
               ],
               plugins: [

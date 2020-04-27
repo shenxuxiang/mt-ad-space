@@ -28,14 +28,16 @@ export default class AdSpace extends PureComponent {
     };
     this.wrapperRef = createRef(null);
     this.boxRef = createRef(null);
-    // 每个 AdSpace 的实际宽度（width + marginRight）
-    this.width = props.width + props.spacing;
-    // 保存当前 wrapperRef 的 translateX 的值
-    this.offsetX = 0;
   }
 
   componentDidMount() {
     const { children, width, spacing } = this.props;
+
+    // 每个 AdSpace 的实际宽度（width + marginRight）
+    this.width = width + spacing;
+    // 保存当前 wrapperRef 的 translateX 的值
+    this.offsetX = 0;
+    
     // if (children.length <= 1) return;
     const boxWidth = this.boxRef.current.clientWidth;
     // 可视区可完全容纳几个 AdSpace
@@ -48,10 +50,26 @@ export default class AdSpace extends PureComponent {
     this.maxOffsetLeft = this.wrapperRef.current.scrollWidth - boxWidth;
     // 一共多少个子元素，还要再减去 完全展示的子元素的个数
     this.len = children.length - num;
-
+    
     this.wrapperRef.current.addEventListener('touchstart', this.handleTouchStart, false);
     this.wrapperRef.current.addEventListener('touchmove', this.handleTouchMove, false);
     this.wrapperRef.current.addEventListener('touchend', this.handleTouchEnd, false);
+  }
+
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (nextProps.children.length > 0 && nextProps.children.length !== this.props.children.length) {
+      const { children, width, spacing } = nextProps;
+
+      setTimeout(() => {
+        const boxWidth = this.boxRef.current.clientWidth;
+        const num = Math.floor(boxWidth / width);
+        this.minOffsetLeft = spacing + this.width - (
+          (boxWidth - (width * num + (num - 1) * spacing)) / 2
+        );
+        this.maxOffsetLeft = this.wrapperRef.current.scrollWidth - boxWidth;
+        this.len = children.length - num;
+      }, 200);
+    }
   }
 
   handleTouchStart = (event) => {
